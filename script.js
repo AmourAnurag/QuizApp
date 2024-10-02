@@ -2,7 +2,7 @@ import { Questions } from "./question.js";
 
 console.log(Questions);
 console.log(Questions[0].Question);
-
+let timer;
 let index = 0;
 let number = 0;
 let i = 0;
@@ -67,35 +67,31 @@ function showQuestion() {
       number += 1;
     });
   }
+
   startCountdown(30);
 }
 function startCountdown(seconds) {
-    let timeRemaining = seconds;
-    Time.innerHTML = timeRemaining; // Display the initial time
+  let timeRemaining = seconds;
+  Time.innerHTML = timeRemaining; // Display the initial time
+  //clear the existing time
+  clearInterval(timer);
+   timer = setInterval(() => {
+    timeRemaining--;
+    Time.innerHTML = timeRemaining; // Update the UI
 
-    const countdown = setInterval(() => {
-        timeRemaining--;
-        Time.innerHTML = timeRemaining; // Update the UI
-
-        if (timeRemaining <= 0) {
-            clearInterval(countdown); // Stop the countdown
-            // Enable answer buttons after countdown
-            Array.from(btn).forEach(button => {
-                button.disabled = false;
-            });
-            nextQuestion(); // Move to the next question automatically after time runs out
-        }
-    }, 1000); // Update every second
+    if (timeRemaining <= 0) {
+      clearInterval(countdown); // Stop the countdown
+      // Enable answer buttons after countdown
+      Array.from(btn).forEach((button) => {
+        button.disabled = false;
+      });
+      nextQuestion(); // Move to the next question automatically after time runs out
+    }
+  }, 1000); // Update every second
 }
 
 nextbutton.addEventListener("click", nextQuestion);
 function nextQuestion() {
-  setTimeout(() => {
-    // Enable the answer buttons after 1 second
-    Array.from(btn).forEach((button) => {
-      button.disabled = false;
-    });
-  }, 1000);
   // Time.innerHTML=Date.now()
   Restart();
   index += 1;
